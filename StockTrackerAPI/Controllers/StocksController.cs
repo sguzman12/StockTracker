@@ -12,10 +12,25 @@ namespace StockTrackerAPI.Controllers
     public class StocksController : ControllerBase
     {
         [HttpGet]
-        public JsonResult GetStocks() 
+        //[Produces("application/json", "application/xml")]
+        public IActionResult GetStocks()
         {
-            return new JsonResult(StockDataStore.Current.Stocks);
-           
+            return Ok(StockDataStore.Current.Stocks);
+
+        }
+
+        [HttpGet("{id}")]
+        //[Produces("application/json", "application/xml")]
+        public IActionResult GetStock(long id)
+        {
+            var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
+            if (stock == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(stock);
+
         }
     }
 }
