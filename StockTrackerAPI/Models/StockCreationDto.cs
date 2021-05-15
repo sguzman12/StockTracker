@@ -8,16 +8,17 @@ namespace StockTrackerAPI.Models
 {
     public class StockCreationDto
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter a valid alpha code.")]
         [MaxLength(6)]
         public string AlphaCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please provide a stock name.")]
         [MaxLength(100)]
         public string Name { get; set; }
 
         [Required]
-        [RegularExpression(@"^\$?\d+(\.(\d{2}))?$")]
+        [RegularExpression(@"^\$?\d+(\.(\d{2}))?$", 
+            ErrorMessage = "Please provide value in the proper format (#.##)")]
         public decimal Price { get; set; }
     }
 }
