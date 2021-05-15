@@ -86,7 +86,7 @@ namespace StockTrackerAPI.Controllers
                                 "value": "Updated - NY Mellon",
                                 "path": "/name",
                                 "op": "replace"
-                             }
+                             },
                         ]
          **/
         [HttpPatch("{id}")] 
@@ -116,12 +116,35 @@ namespace StockTrackerAPI.Controllers
                 return BadRequest(ModelState);
             }
 
+            // Checks to make sure that required fields can
+            // not be removed
+            if (!TryValidateModel(stockToPatch)) 
+            {
+                return BadRequest(ModelState);
+            }
+
             updatingStock.AlphaCode = stockToPatch.AlphaCode;
             updatingStock.Name = stockToPatch.Name;
             updatingStock.Price = stockToPatch.Price;
 
             return NoContent();
 
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteStock(long id) 
+        {
+            // InMemory Only
+            var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
+
+            if (stock == null)
+            {
+                return NotFound();
+            }
+
+            StockDataStore.Current.Stocks.Remove(stock);
+
+            return NoContent();
         }
     }
 }
