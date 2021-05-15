@@ -36,14 +36,14 @@ namespace StockTrackerAPI.Controllers
         public IActionResult CreateStock(StockCreationDto stock)
         {
 
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             // InMemory Only 
             var nextID = StockDataStore.Current.Stocks.Count();
-            
+
             var newStock = new StockDto()
             {
                 Id = ++nextID,
@@ -58,16 +58,16 @@ namespace StockTrackerAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateStock(long id, StockUpdateDto stock) 
+        public IActionResult UpdateStock(long id, StockUpdateDto stock)
         {
-            if (!ModelState.IsValid) 
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             // InMemory Only
             var updatingStock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
 
-            if (updatingStock == null) 
+            if (updatingStock == null)
             {
                 return NotFound();
             }
@@ -80,10 +80,19 @@ namespace StockTrackerAPI.Controllers
 
         }
 
-        [HttpPatch("{id}")] //api request must be with [{}] for it to work properly
+        /** JSON Patch Body
+         *  Example     [
+                            {
+                                "value": "Updated - NY Mellon",
+                                "path": "/name",
+                                "op": "replace"
+                             }
+                        ]
+         **/
+        [HttpPatch("{id}")] 
         public IActionResult PartialUpdateStock(long id, JsonPatchDocument<StockUpdateDto> patchDocument)
         {
-            
+
             // InMemory Only
             var updatingStock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
 
