@@ -27,14 +27,9 @@ namespace StockTrackerAPI
             services.AddMvc(option =>
             {
                 option.EnableEndpointRouting = false;
-                option.RespectBrowserAcceptHeader = true;
-                
+
             })
-                .AddXmlSerializerFormatters()
-                .AddXmlDataContractSerializerFormatters();
-                
-
-
+                .AddXmlSerializerFormatters();  //Adds XML output option
 
         }
 
