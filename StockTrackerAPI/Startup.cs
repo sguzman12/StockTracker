@@ -29,7 +29,9 @@ namespace StockTrackerAPI
                 option.EnableEndpointRouting = false;
 
             })
+                .AddNewtonsoftJson()   //Adds Patch Update capability
                 .AddXmlSerializerFormatters();  //Adds XML output option
+                
 
         }
 
