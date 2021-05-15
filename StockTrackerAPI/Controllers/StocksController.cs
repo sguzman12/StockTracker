@@ -12,15 +12,13 @@ namespace StockTrackerAPI.Controllers
     public class StocksController : ControllerBase
     {
         [HttpGet]
-        //[Produces("application/json", "application/xml")]
         public IActionResult GetStocks()
         {
             return Ok(StockDataStore.Current.Stocks);
 
         }
 
-        [HttpGet("{id}")]
-        //[Produces("application/json", "application/xml")]
+        [HttpGet("{id}", Name = "GetStock")]
         public IActionResult GetStock(long id)
         {
             var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
@@ -31,6 +29,29 @@ namespace StockTrackerAPI.Controllers
 
             return Ok(stock);
 
+        }
+
+        [HttpPost]
+        public IActionResult CreateStock(StockCreationDto stock)
+        {
+            if (stock == null)
+            {
+                return NotFound();
+            }
+            // InMemory Only 
+            var nextID = StockDataStore.Current.Stocks.Count();
+            
+            var newStock = new StockDto()
+            {
+                Id = ++nextID,
+                AlphaCode = stock.AlphaCode,
+                Name = stock.Name,
+                Price = stock.Price
+            };
+
+            StockDataStore.Current.Stocks.Add(newStock);
+
+            return CreatedAtRoute("GetStock", new { id = newStock.Id }, newStock);
         }
     }
 }
