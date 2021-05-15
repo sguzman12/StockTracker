@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using StockTrackerAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -34,10 +35,12 @@ namespace StockTrackerAPI.Controllers
         [HttpPost]
         public IActionResult CreateStock(StockCreationDto stock)
         {
-            if (stock == null)
+
+            if (!ModelState.IsValid) 
             {
-                return NotFound();
+                return BadRequest(ModelState);
             }
+
             // InMemory Only 
             var nextID = StockDataStore.Current.Stocks.Count();
             
@@ -52,6 +55,64 @@ namespace StockTrackerAPI.Controllers
             StockDataStore.Current.Stocks.Add(newStock);
 
             return CreatedAtRoute("GetStock", new { id = newStock.Id }, newStock);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateStock(long id, StockUpdateDto stock) 
+        {
+            if (!ModelState.IsValid) 
+            {
+                return BadRequest(ModelState);
+            }
+            // InMemory Only
+            var updatingStock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
+
+            if (updatingStock == null) 
+            {
+                return NotFound();
+            }
+
+            updatingStock.AlphaCode = stock.AlphaCode;
+            updatingStock.Name = stock.Name;
+            updatingStock.Price = stock.Price;
+
+            return NoContent();
+
+        }
+
+        [HttpPatch("{id}")] //api request must be with [{}] for it to work properly
+        public IActionResult PartialUpdateStock(long id, JsonPatchDocument<StockUpdateDto> patchDocument)
+        {
+            
+            // InMemory Only
+            var updatingStock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
+
+            if (updatingStock == null)
+            {
+                return NotFound();
+            }
+
+            var stockToPatch =
+                 new StockUpdateDto()
+                 {
+                     AlphaCode = updatingStock.AlphaCode,
+                     Name = updatingStock.Name,
+                     Price = updatingStock.Price
+                 };
+
+            patchDocument.ApplyTo(stockToPatch, ModelState); //Must have Microsoft.Asp.Net.MVC.NewtonsoftJson installed
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            updatingStock.AlphaCode = stockToPatch.AlphaCode;
+            updatingStock.Name = stockToPatch.Name;
+            updatingStock.Price = stockToPatch.Price;
+
+            return NoContent();
+
         }
     }
 }
