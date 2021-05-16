@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using StockTrackerAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,13 @@ namespace StockTrackerAPI.Controllers
     [Route("api/stocks")]
     public class StocksController : ControllerBase
     {
+        private readonly ILogger<StocksController> logger;
+
+        public StocksController(ILogger<StocksController> logger)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
+
         [HttpGet]
         public IActionResult GetStocks()
         {
@@ -22,13 +30,23 @@ namespace StockTrackerAPI.Controllers
         [HttpGet("{id}", Name = "GetStock")]
         public IActionResult GetStock(long id)
         {
-            var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
-            if (stock == null)
+            try
             {
-                return NotFound();
+                var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
+                if (stock == null)
+                {
+                    logger.LogInformation($"Stock with id: {id} was not found.");
+                    return NotFound();
+                }
+
+                return Ok(stock);
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical($"Exception while getting stock with id: {id}.", ex);
+                return StatusCode(500, "A problem has occured while handling your request");
             }
 
-            return Ok(stock);
 
         }
 
@@ -89,7 +107,7 @@ namespace StockTrackerAPI.Controllers
                              },
                         ]
          **/
-        [HttpPatch("{id}")] 
+        [HttpPatch("{id}")]
         public IActionResult PartialUpdateStock(long id, JsonPatchDocument<StockUpdateDto> patchDocument)
         {
 
@@ -118,7 +136,7 @@ namespace StockTrackerAPI.Controllers
 
             // Checks to make sure that required fields can
             // not be removed
-            if (!TryValidateModel(stockToPatch)) 
+            if (!TryValidateModel(stockToPatch))
             {
                 return BadRequest(ModelState);
             }
@@ -132,7 +150,7 @@ namespace StockTrackerAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult DeleteStock(long id) 
+        public IActionResult DeleteStock(long id)
         {
             // InMemory Only
             var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
