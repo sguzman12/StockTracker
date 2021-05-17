@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using StockTrackerAPI.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +33,13 @@ namespace StockTrackerAPI
             })
                 .AddNewtonsoftJson()   //Adds Patch Update capability
                 .AddXmlSerializerFormatters();  //Adds XML output option
-                
+
+            services.AddDbContext<StockInfoContext>(    //Adds DBContext to MySql db. Default Connection in appsettings.json
+                    options =>
+                    {
+                        options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+                    });
+
 
         }
 
