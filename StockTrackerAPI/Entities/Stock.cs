@@ -25,5 +25,11 @@ namespace StockTrackerAPI.Entities
         [RegularExpression(@"^\$?\d+(\.(\d{2}))?$",
            ErrorMessage = "Please provide value in the proper format (#.##)")]
         public decimal Price { get; set; }
+
+        [RegularExpression(@"^\$?\d+(\.(\d{2}))?$",
+           ErrorMessage = "Please provide value in the proper format (#.##)")]
+        public decimal closingPrice { get; set; }
+
+        public string url { get; set; }
     }
 }
