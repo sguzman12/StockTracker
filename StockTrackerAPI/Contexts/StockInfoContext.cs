@@ -14,7 +14,7 @@ namespace StockTrackerAPI.Contexts
         public StockInfoContext(DbContextOptions<StockInfoContext> options)
             : base(options)
         {
-            Database.EnsureCreated();
+           Database.EnsureCreated();
         }
     }
 }
