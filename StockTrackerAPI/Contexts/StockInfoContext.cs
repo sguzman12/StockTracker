@@ -26,8 +26,8 @@ namespace StockTrackerAPI.Contexts
                     AlphaCode = "FGZMX",
                     Name = "Guzman Inc",
                     Price = 136.41M,
-                    closingPrice = 178.24M,
-                    url = "https://www.nasdaq.com/market-activity/funds-and-etfs/fgzmx"
+                    ClosingPrice = 178.24M,
+                    Url = "https://www.nasdaq.com/market-activity/funds-and-etfs/fgzmx"
                 },
                 new Stock()
                 {
@@ -35,8 +35,8 @@ namespace StockTrackerAPI.Contexts
                     AlphaCode = "GOOGL",
                     Name = "Google",
                     Price = 3343.31M,
-                    closingPrice = 2000.50M,
-                    url = "https://www.nasdaq.com/market-activity/stocks/goog"
+                    ClosingPrice = 2000.50M,
+                    Url = "https://www.nasdaq.com/market-activity/stocks/goog"
                 },
                 new Stock()
                 {
@@ -44,8 +44,8 @@ namespace StockTrackerAPI.Contexts
                     AlphaCode = "AMZN",
                     Name = "Amazon",
                     Price = 287.81M,
-                    closingPrice = 250.00M,
-                    url = "https://www.nasdaq.com/market-activity/stocks/amzn"
+                    ClosingPrice = 250.00M,
+                    Url = "https://www.nasdaq.com/market-activity/stocks/amzn"
                 },
                 new Stock()
                 {
@@ -53,8 +53,8 @@ namespace StockTrackerAPI.Contexts
                     AlphaCode = "WMT",
                     Name = "Walmart Inc",
                     Price = 14.81M,
-                    closingPrice = 14.60M,
-                    url = "https://www.nasdaq.com/market-activity/stocks/wmt"
+                    ClosingPrice = 14.60M,
+                    Url = "https://www.nasdaq.com/market-activity/stocks/wmt"
                 },
                 new Stock()
                 {
@@ -62,8 +62,8 @@ namespace StockTrackerAPI.Contexts
                     AlphaCode = "AMD",
                     Name = "Advanced Micro Devices, Inc.",
                     Price = 14.64M,
-                    closingPrice = 10.25M,
-                    url = "https://www.nasdaq.com/market-activity/stocks/amd"
+                    ClosingPrice = 10.25M,
+                    Url = "https://www.nasdaq.com/market-activity/stocks/amd"
                 },
                 new Stock()
                 {
@@ -71,8 +71,8 @@ namespace StockTrackerAPI.Contexts
                     AlphaCode = "ZNGA",
                     Name = "Zynga Inc.",
                     Price = 10.70M,
-                    closingPrice = 8.62M,
-                    url = "https://www.nasdaq.com/market-activity/stocks/znga"
+                    ClosingPrice = 8.62M,
+                    Url = "https://www.nasdaq.com/market-activity/stocks/znga"
                 });
                 
                 
