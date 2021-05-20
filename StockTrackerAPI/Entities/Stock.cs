@@ -30,8 +30,8 @@ namespace StockTrackerAPI.Entities
         [RegularExpression(@"^\$?\d+(\.(\d{2}))?$",
            ErrorMessage = "Please provide value in the proper format (#.##)")]
         [Column(TypeName = "decimal(10,2)")]
-        public decimal closingPrice { get; set; }
+        public decimal ClosingPrice { get; set; }
 
-        public string url { get; set; }
+        public string Url { get; set; }
     }
 }
