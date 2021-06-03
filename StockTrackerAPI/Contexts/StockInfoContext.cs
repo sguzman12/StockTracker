@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace StockTrackerAPI.Contexts
 {
+    /**
+     * Stock Entity Database Binding class. 
+     * */
     public class StockInfoContext : DbContext
     {
         public DbSet<Stock> Stocks { get; set; }
@@ -20,7 +23,7 @@ namespace StockTrackerAPI.Contexts
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Stock>()
-                .HasData(new Stock()
+                .HasData(new Stock() //Dummy Data
                 {
                     Id = 1,
                     AlphaCode = "FGZMX",
