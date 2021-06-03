@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using StockTrackerAPI.Contexts;
+using StockTrackerAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace StockTrackerAPI
                         options.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
                     });
 
+            services.AddScoped<IStockInfoRepository, StockInfoRepository>();
 
         }
 
