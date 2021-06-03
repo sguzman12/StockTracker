@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace StockTrackerAPI.Entities
 {
+    /**
+     * Entity of Stock object in the EF.
+     * */
     public class Stock
     {
         [Key]
