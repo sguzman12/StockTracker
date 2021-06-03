@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace StockTrackerAPI.Controllers
 {
+    /**
+     * Controller class for Stock objects. Class has CRUD operations.
+     * */
     [ApiController]
     [Route("api/stocks")]
     public class StocksController : ControllerBase
