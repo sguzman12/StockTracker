@@ -42,6 +42,7 @@ namespace StockTrackerAPI
                     });
 
             services.AddScoped<IStockInfoRepository, StockInfoRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());    //AutoMapper. Automatically scans for mapping configurations
 
         }
 
