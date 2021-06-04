@@ -17,7 +17,7 @@ namespace StockTrackerAPI.Services
             this.context = context;
         }
 
-        public Stock GetStock(int stockId)
+        public Stock GetStock(long stockId)
         {
             return context.Stocks.Where(s => s.Id == stockId).FirstOrDefault();
         }

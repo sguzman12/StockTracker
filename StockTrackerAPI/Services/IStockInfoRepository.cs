@@ -14,7 +14,7 @@ namespace StockTrackerAPI.Services
         //Can also be IQueryable. Depends on the type of API built. Pros and Cons for both.
         IEnumerable<Stock> GetStocks();
 
-        Stock GetStock(int stockId);
+        Stock GetStock(long stockId);
 
     }
 }
