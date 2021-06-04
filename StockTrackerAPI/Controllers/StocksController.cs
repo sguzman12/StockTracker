@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockTrackerAPI.Models;
+using StockTrackerAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +18,20 @@ namespace StockTrackerAPI.Controllers
     public class StocksController : ControllerBase
     {
         private readonly ILogger<StocksController> logger;
+        private readonly IStockInfoRepository repository;
 
-        public StocksController(ILogger<StocksController> logger)
+        public StocksController(ILogger<StocksController> logger, IStockInfoRepository repository)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.repository = repository;
         }
 
         [HttpGet]
         public IActionResult GetStocks()
         {
-            return Ok(StockDataStore.Current.Stocks);
+            var stocks = repository.GetStocks();
 
+            return Ok(stocks);
         }
 
         [HttpGet("{id}", Name = "GetStock")]
