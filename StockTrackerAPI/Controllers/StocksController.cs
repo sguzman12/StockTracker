@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using StockTrackerAPI.Models;
@@ -19,19 +20,21 @@ namespace StockTrackerAPI.Controllers
     {
         private readonly ILogger<StocksController> logger;
         private readonly IStockInfoRepository repository;
+        private readonly IMapper mapper;
 
-        public StocksController(ILogger<StocksController> logger, IStockInfoRepository repository)
+        public StocksController(ILogger<StocksController> logger, IStockInfoRepository repository, IMapper mapper)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.repository = repository;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetStocks()
         {
-            var stocks = repository.GetStocks();
+            var stockEntities = repository.GetStocks();
 
-            return Ok(stocks);
+            return Ok(mapper.Map<IEnumerable<StockDto>>(stockEntities));
         }
 
         [HttpGet("{id}", Name = "GetStock")]
@@ -47,7 +50,7 @@ namespace StockTrackerAPI.Controllers
                     return NotFound();
                 }
 
-                return Ok(stock);
+                return Ok(mapper.Map<StockDto>(stock));
             }
             catch (Exception ex)
             {
