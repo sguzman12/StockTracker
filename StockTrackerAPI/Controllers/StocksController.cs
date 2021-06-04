@@ -39,7 +39,8 @@ namespace StockTrackerAPI.Controllers
         {
             try
             {
-                var stock = StockDataStore.Current.Stocks.FirstOrDefault(s => s.Id == id);
+                var stock = repository.GetStock(id);
+
                 if (stock == null)
                 {
                     logger.LogInformation($"Stock with id: {id} was not found.");
