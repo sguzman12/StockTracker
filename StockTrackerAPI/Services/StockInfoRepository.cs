@@ -10,7 +10,7 @@ namespace StockTrackerAPI.Services
     public class StockInfoRepository : IStockInfoRepository
     {
 
-        private StockInfoContext context;
+        private readonly StockInfoContext context;
 
         public StockInfoRepository(StockInfoContext context)
         {
