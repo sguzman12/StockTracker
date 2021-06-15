@@ -13,7 +13,8 @@ namespace StockTrackerAPI.Profiles
     {
         public StockProfile()
         {
-            CreateMap<Entities.Stock, Models.StockDto>();
+            CreateMap<Entities.Stock, Models.StockDto>();   //GET 
+            CreateMap<Models.StockCreationDto, Entities.Stock>();   //POST
         }
 
 
