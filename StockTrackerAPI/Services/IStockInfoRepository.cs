@@ -1,4 +1,5 @@
 ﻿using StockTrackerAPI.Entities;
+using StockTrackerAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace StockTrackerAPI.Services
         IEnumerable<Stock> GetStocks();
 
         Stock GetStock(long stockId);
+
+        void AddStock(StockCreationDto stock);
 
     }
 }
