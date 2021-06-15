@@ -71,15 +71,17 @@ namespace StockTrackerAPI.Controllers
             }
 
             // InMemory Only 
-            var nextID = StockDataStore.Current.Stocks.Count();
+            //var nextID = StockDataStore.Current.Stocks.Count();
 
-            var newStock = new StockDto()
-            {
-                Id = ++nextID,
-                AlphaCode = stock.AlphaCode,
-                Name = stock.Name,
-                Price = stock.Price
-            };
+            //var newStock = new StockDto()
+            //{
+            //    Id = ++nextID,
+            //    AlphaCode = stock.AlphaCode,
+            //    Name = stock.Name,
+            //    Price = stock.Price
+            //};
+
+            var newStock = mapper.Map<Entities.Stock>(stock);
 
             StockDataStore.Current.Stocks.Add(newStock);
 
