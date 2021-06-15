@@ -1,5 +1,6 @@
 ﻿using StockTrackerAPI.Contexts;
 using StockTrackerAPI.Entities;
+using StockTrackerAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace StockTrackerAPI.Services
         public StockInfoRepository(StockInfoContext context)
         {
             this.context = context;
+        }
+
+        public void AddStock(StockCreationDto stock)
+        {
+           return context.Stocks.
         }
 
         public Stock GetStock(long stockId)
